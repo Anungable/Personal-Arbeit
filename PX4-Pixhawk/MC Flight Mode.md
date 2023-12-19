@@ -34,8 +34,15 @@ commander.run()->handle_command()->publish vehicle_status
 
 navigator->subscribe vehicle_status
 
+#### Flight mode activation flag
+
+
+
 ---
 
 ### Reference
 
 https://docs.px4.io/main/en/flight_modes/
+
+https://blog.csdn.net/qq_38768959/article/details/127763019
+
