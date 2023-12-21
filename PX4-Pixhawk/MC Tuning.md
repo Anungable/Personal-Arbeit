@@ -1,6 +1,6 @@
-## MC Tuning
-
 ### Description
+
+根據官網、網路參考資料及Siras調參經驗整理出來的PX4 PID tuning方式。
 
 ---
 
@@ -95,7 +95,7 @@
 
 #### 2. Trajectory generator模式選取
 
-Trajectory generator影響setpoint的設定，模式有以下3種，透過`MPC_POS_MODE`調整：
+Trajectory generator影響setpoint的產生，模式有以下3種，透過`MPC_POS_MODE`調整：
 
 - Jerk-limited trajectory (Default) : smooth command
 - Slew-rate trajectory : quicker response than jerk-limited since jerk and acceleration are not limited
@@ -105,7 +105,7 @@ Trajectory generator影響setpoint的設定，模式有以下3種，透過`MPC_P
 
 - mission mode只使用Jerk-limited trajectory
 - postion和altitude (只有高度向平滑化) 支援全部
-- 其他模式不適用
+- 其他模式沒有需要速度smoothen的要求故不支援
 
 ### Filter Tuning
 
