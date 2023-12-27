@@ -28,3 +28,13 @@ sudo apt-get install -f
 sudo dpkg -r <file_name>.deb
 ```
 
+### Get rid of annoying bash
+
+```shell
+sudo gedit ~/.bashrc
+```
+
+delete掉錯誤那行
+
+
+

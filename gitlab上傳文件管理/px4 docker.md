@@ -12,12 +12,12 @@ docker run -it --privileged \
 docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 5bf03990760b
 ```
 
-<sup style="display: inli
+
 
 ```bash
 docker run -it --privileged \
 --env=LOCAL_USER_ID="$(id -u)" \
--v /home/inungshen/inung/PX4-Autopilot-ins:/home/inungshen/inung/PX4-Autopilot-ins/:rw \
+-v /home/van/inung/px4-autopilot:/home/van/inung/px4-autopilot/:rw \
 -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
 -e DISPLAY=:0 \
 -p 18550:18550/udp \

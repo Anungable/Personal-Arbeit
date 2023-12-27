@@ -74,3 +74,21 @@ git merge --squash <feature branch>
 git commit -m "commit"
 ```
 
+### Delete Local/Remote Commit
+
+```shell
+# discard all changes
+git reset --hard <hash>
+# keep the changes
+git reset --soft <hash>
+
+# delete most recent commit
+git reset --hard HEAD~1
+```
+
+刪除遠端commit：
+
+```shell
+git push origin HEAD --force
+```
+

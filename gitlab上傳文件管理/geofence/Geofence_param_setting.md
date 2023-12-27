@@ -16,7 +16,7 @@
 ```python
 set_param("GF_ACTION",2)
 
-#單位為cm，如下為輸入30公尺
-set_param("GF_MAX_HOR_DIST",3000)
+#單位為m，如下為輸入30公尺
+set_param("GF_MAX_HOR_DIST",30)
 ```
 
