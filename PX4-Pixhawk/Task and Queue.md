@@ -1,17 +1,3 @@
-## Architecture
-
-**Modularity in PX4：**
-
-1. All the flight tasks are specified at the top level (called APP in PX4) and all of them use the same position/attitude controller. But of course, each airframe has its own control schemes thus had developed in different files.
-
-   (Ref path： /src/modules).
-
-2. Class
-
-3. Template
-
-4. uORB
-
 ## Parameter
 
 Ref: https://docs.px4.io/main/en/advanced/parameters_and_configurations.html
@@ -98,27 +84,14 @@ void Module::parameters_update()
 
 ## Task and Work Queue Task
 
-Ref: https://docs.px4.io/main/en/modules/module_template.html
-
-PX4有提供template，可直接套用：src/examples/work_item **&** src/templates/template_module 
-
 ### Task
 
 有自己的stack和priority，使用時機：
 
 - Accessing parameters and reacting to parameter updates.
-
 - uORB subscriptions and waiting for topic updates.
-
 - Controlling the task that runs in the background via `start`/`stop`/`status`.
-
 - Command-line argument parsing.
-
-- Documentation: the `PRINT_MODULE_*` methods serve two purposes
-
-  They are used to print the command-line usage when entering `module help` on the console.
-
-  They are automatically extracted via script to generate the [Modules & Commands Reference](https://docs.px4.io/main/en/modules/modules_main.html) page.
 
 <font color='orange'>使用方式：</font>
 
@@ -153,19 +126,37 @@ px4_add_module(
 2. 在declare module class時也需要derived from **px4::ScheduleWorkItem**
 
 ```c++
-class ManualControl : public ModuleBase<ManualControl>, public ModuleParams, public px4::ScheduledWorkItem
+class ManualControl : public ModuleBase<ManualControl>, public ModuleParams, public px4::ScheduledWorkItems
 ```
 
-## Module
+---
 
-Moduels are derived from `ModuleBase`來管理module中共通的一些函數 (e.g. start, stop, status...)
+### Work queue
 
-下圖是啟動機制：
-Ref: https://blog.csdn.net/m0_58880384/article/details/123462988
+```c++
+MulticopterRateControl::MulticopterRateControl(bool vtol) :
+	ModuleParams(nullptr),
+	WorkItem(MODULE_NAME, px4::wq_configurations::rate_ctrl)
+    {
+        //statements
+    }
+```
 
-<img src="https://img-blog.csdnimg.cn/7905cb8e66cd47089ba2360a8750082d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbTBfNTg4ODAzODQ=,size_14,color_FFFFFF,t_70,g_se,x_16" alt="img" style="zoom:67%;" />
 
 
+`WorkQueueManager.hpp` : queue的尋找跟創建都在這裡
 
+```c++
+struct wq_config_t {
+	const char *name;
+	uint16_t stacksize;
+	int8_t relative_priority; // relative to max
+};
 
+namespace wq_configurations
+{
+static constexpr wq_config_t rate_ctrl{"wq:rate_ctrl", 3150, 0}; // PX4 inner loop highest priority
+}
+```
 
+`WorkItem`
